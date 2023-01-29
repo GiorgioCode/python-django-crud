@@ -1,0 +1,104 @@
+{% extends "./base.html" %} {% block title %} Cursos disponibles {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1 class="text-center mb-4">Administración de cursos</h1>
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="card bg-dark text-light mb-4">
+                <div class="card-header">Agregar un curso</div>
+                <div class="card-body">
+                    <form action="/editarCurso/" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="codigo" class="form-label"
+                                >Codigo</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control text-success"
+                                id="codigo"
+                                name="codigo"
+                                aria-describedby="numeroCodigo"
+                                required
+                                maxlength="6"
+                                minlength="6"
+                                value="{{curso.codigo}}"
+                                readonly
+                                disabled
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label"
+                                >Nombre</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="nombre"
+                                name="nombre"
+                                required
+                                maxlength="50"
+                                value="{{curso.nombre}}"
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="creditos" class="form-label"
+                                >Creditos</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="creditos"
+                                name="creditos"
+                                aria-describedby="numeroCodigo"
+                                required
+                                maxlength="9"
+                                value="{{curso.creditos}}"
+                            />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Modificar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <table
+                class="text-center table table-dark table-striped table-responsive"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Creditos</th>
+                        <th scope="col" colspan="2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in cursos %}
+                    <tr>
+                        <td>{{c.codigo}}</td>
+                        <td>{{c.nombre}}</td>
+                        <td>{{c.creditos}}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{c.codigo}}"
+                                >Editar</a
+                            >
+                        </td>
+                        <td>
+                            <a
+                                class="btn btn-danger"
+                                href="../eliminacionCurso/{{c.codigo}}"
+                                >Eliminar</a
+                            >
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
